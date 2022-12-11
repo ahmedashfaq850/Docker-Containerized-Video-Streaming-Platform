@@ -8,16 +8,24 @@ import { useContext, useState } from "react";
 import { Context } from "../context/ContextApi";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
-
   const { mobileMenu, setMobileMenu } = useContext(Context);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  const SearchQueyHandler = (event)=> {
-    if ((event?.key === 'Enter' || event === 'searchbutton') && searchQuery.length > 0) {
-      navigate(`/searchResult/${searchQuery}}`)
+  const SearchQueyHandler = (event) => {
+    if (
+      (event?.key === "Enter" || event === "searchbutton") &&
+      searchQuery.length > 0
+    ) {
+      navigate(`/searchResult/${searchQuery}}`);
     }
-  } 
+  };
+
+  const mobileMenuToggle = () => {
+    setMobileMenu(!mobileMenu);
+  };
+
+  console.log(mobileMenu)
   return (
     <>
       <header>
@@ -27,8 +35,11 @@ const Header = () => {
             <BiMenu
               size="20px"
               className="block lg:hidden text-white cursor-pointer"
+              onClick={()=> mobileMenuToggle()}
             />
-            <Link to='/'><img src="images/logotest.png" width="110px" alt="" /></Link>
+            <Link to="/">
+              <img src="images/logotest.png" width="110px" alt="" />
+            </Link>
           </div>
           {/* search section */}
           <div className="lg:block w-[600px] hidden items-center gap-2 rounded-xl relative">
@@ -36,11 +47,17 @@ const Header = () => {
               className="w-[93%]  text-white pl-3 p-[5px] bg-[#151517] rounded-full  outline-none border border-[#4c4c4d]"
               type="search"
               placeholder="Search"
-              onChange={(e)=> {setSearchQuery(e.target.value)}}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+              }}
               onKeyUp={SearchQueyHandler}
             />
             <button className="p-2 bg-[#4c4c4d] absolute left-[522px] rounded-r-full">
-              <BiSearchAlt2 onClick={()=> SearchQueyHandler("searchbutton")} className="text-white" size="20px" />
+              <BiSearchAlt2
+                onClick={() => SearchQueyHandler("searchbutton")}
+                className="text-white"
+                size="20px"
+              />
             </button>
           </div>
 
@@ -55,7 +72,7 @@ const Header = () => {
               alt=""
             />
             <p className="text-[12px] hidden lg:block">Ahmed Ashfaq</p>
-            <BiChevronDown/>
+            <BiChevronDown />
           </div>
         </div>
       </header>
